@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+  screen -list
+else
+  screen -c ~/.screenrc -x $1 || screen -c ~/.screenrc -S $1
+fi
