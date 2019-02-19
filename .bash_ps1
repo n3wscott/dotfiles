@@ -33,7 +33,8 @@ c=${PS1_COLOR:-199};
 
 PS1_SYM=${PS1_SYM:-⚛};
 
-#     PS1="$(__bc 0)$(__c 105)[\T] $(__c 237)\u@\h $(__c 74)\w$(__c 253) $(__c 35)\$(vcprompt)\n$(__c $c)\n$s $(__c 253)"
+# this is what PS1 was before using prompt_command
+# PS1="$(__bc 0)$(__c 105)[\T] $(__c 237)\u@\h $(__c 74)\w$(__c 253) $(__c 35)\$(vcprompt)\n$(__c $c)\n$s $(__c 253)"
 
 PS1_SYM_OK=${PS1_SYM_OK:-PS1_SYM}
 PS1_SYM_ERR=${PS1_SYM_ERR:-PS1_SYM}
@@ -42,12 +43,8 @@ PROMPT_COMMAND=__prompt_command
 
 __prompt_command() {
     local EXIT="$?"
-    
-    local RCol='\[\e[0m\]'
-
     local Red='\[\e[0;31m\]'
-    local Gre='\[\e[0;32m\]'
-    
+
     if [ $EXIT != 0 ]; then
         s="${Red}$PS1_SYM_ERR"
     else
