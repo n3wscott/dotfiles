@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+kubectl run curl --rm -i --tty  --image=tutum/curl  -- bash
