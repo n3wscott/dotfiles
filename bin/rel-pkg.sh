@@ -22,6 +22,9 @@ git ns checkout $branch
 # gsed -i '/[[override|]]\n  name = "github.com\/knative\/pkg"/!b;n;n;c\ \ branch = "'"$dep_branch"'"' Gopkg.toml
 # gsed '/\[\[(override|constraint)\]\]\n  name = "github.com\/knative\/pkg"/!b;n;n;c\ \ branch = "'"$dep_branch"'"' Gopkg.toml
 
+
+tomles update knative.dev/pkg -b $dep_branch -f ./Gopkg.toml
+
 IS_DEP_BRANCH=`grep 'knative.dev/pkg' -B1 -A2 Gopkg.toml | \
    grep -E 'override|contraint' -A3 | \
    grep "$dep_branch"`
