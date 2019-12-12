@@ -2,11 +2,17 @@
 
 # --- Config
 
-version=0.9
-#branch=pkg-branch-v$version
-branch=wip-pkg-branch-v$version
-dep_branch=release-$version
-#dep_branch=master
+version=0.11
+stage="post"
+
+if [ $stage = "pre" ]
+then
+  branch=pkg-branch-pre-v$version
+  dep_branch=release-$version
+else
+  branch=pkg-branch-post-v$version
+  dep_branch=master
+fi
 
 # --- Script
 
@@ -15,14 +21,7 @@ git ns sync
 echo "🐎 checkout $branch"
 git ns checkout $branch 
 
-
-# TODO: do this later...
-# echo "Fixing pkg branch."
-
-# gsed -i '/[[override|]]\n  name = "github.com\/knative\/pkg"/!b;n;n;c\ \ branch = "'"$dep_branch"'"' Gopkg.toml
-# gsed '/\[\[(override|constraint)\]\]\n  name = "github.com\/knative\/pkg"/!b;n;n;c\ \ branch = "'"$dep_branch"'"' Gopkg.toml
-
-
+# tomles is https://github.com/n3wscott/tomles
 tomles update knative.dev/pkg -b $dep_branch -f ./Gopkg.toml
 
 IS_DEP_BRANCH=`grep 'knative.dev/pkg' -B1 -A2 Gopkg.toml | \
@@ -53,13 +52,17 @@ git commit -m "Updating pkg to latest."
 echo '🐎💨 pushing'
 git push
 
+if [ $stage = "pre" ]
+then
+
 echo "✨Done✨ Now use the following PR template:
 ====================================
 [WIP] Updating pkg to latest for $version release.
 ====================================
 ## Proposed Changes
 
-- Prepping for $version release. Update knative.dev/pkg to latest from branch $dep_branch.
+- Prepping for $version release.
+- Update knative.dev/pkg to latest from branch $dep_branch.
 
 **Release Note**
 
@@ -70,5 +73,27 @@ NONE
 /cc @mattmoor 
 ------------------------------------
 "
+
+else
+
+echo "✨Done✨ Now use the following PR template:
+====================================
+Updating pkg to $branch post $version release.
+====================================
+## Proposed Changes
+
+- Move pkg back to $version post release.
+- Update knative.dev/pkg to latest from branch $dep_branch.
+
+**Release Note**
+
+\`\`\`release-note
+NONE
+\`\`\`
+
+/cc @mattmoor 
+------------------------------------
+"
+fi
 
 git ns open
