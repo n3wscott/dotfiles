@@ -78,11 +78,11 @@ else
 
 echo "✨Done✨ Now use the following PR template:
 ====================================
-Updating pkg to $branch post $version release.
+Updating pkg to $dep_branch post $version release.
 ====================================
 ## Proposed Changes
 
-- Move pkg back to $version post release.
+- Move pkg back to $dep_branch post $version release.
 - Update knative.dev/pkg to latest from branch $dep_branch.
 
 **Release Note**
