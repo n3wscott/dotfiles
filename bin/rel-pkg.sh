@@ -2,7 +2,7 @@
 
 # --- Config
 
-version=0.11
+version=0.14
 stage="post"
 
 if [ $stage = "pre" ]
@@ -23,6 +23,9 @@ git ns checkout $branch
 
 # tomles is https://github.com/n3wscott/tomles
 tomles update knative.dev/pkg -b $dep_branch -f ./Gopkg.toml
+tomles update knative.dev/test-infra -b $dep_branch -f ./Gopkg.toml
+tomles update knative.dev/serving -b $dep_branch -f ./Gopkg.toml
+tomles update knative.dev/eventing -b $dep_branch -f ./Gopkg.toml
 
 IS_DEP_BRANCH=`grep 'knative.dev/pkg' -B1 -A2 Gopkg.toml | \
    grep -E 'override|contraint' -A3 | \
@@ -39,8 +42,8 @@ else
   echo "✅: knative/pkg set to $dep_branch."
 fi
 
-echo '🐎 dep ensure update for knative.dev/pkg'
-dep ensure -update knative.dev/pkg
+echo '🐎 ./hack/update-deps.sh --upgrade'
+./hack/update-deps.sh --upgrade
 
 echo '🐎 ./hack/update-codegen.sh'
 ./hack/update-codegen.sh
@@ -70,7 +73,7 @@ echo "✨Done✨ Now use the following PR template:
 NONE
 \`\`\`
 
-/cc @mattmoor 
+/cc mattmoor 
 ------------------------------------
 "
 
@@ -82,8 +85,8 @@ Updating pkg to $dep_branch post $version release.
 ====================================
 ## Proposed Changes
 
-- Move pkg back to $dep_branch post $version release.
-- Update knative.dev/pkg to latest from branch $dep_branch.
+- Move pkg/test-infra back to $dep_branch post $version release.
+- Update to latest from branch $dep_branch.
 
 **Release Note**
 
@@ -91,7 +94,7 @@ Updating pkg to $dep_branch post $version release.
 NONE
 \`\`\`
 
-/cc @mattmoor 
+/cc mattmoor 
 ------------------------------------
 "
 fi
