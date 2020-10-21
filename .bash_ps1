@@ -21,6 +21,8 @@ vcprompt ()
 
         if [ "$branch" = "master" ]; then
             printf "(%s)" "m$m";
+        elif [ "$branch" = "main" ]; then
+            printf "(%s)" "m$m";
         elif [ "$branch" = "trunk" ]; then
             printf "(%s)" "t$m";
         else
