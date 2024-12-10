@@ -12,9 +12,9 @@ export PATH=$HOME/dotfiles/bin:$PATH
 
 export PATH=$HOME/bin:$PATH
 
-export PATH=$HOME/src/n3wscott/git-tools/bin:$PATH
+# export PATH=$HOME/src/n3wscott/git-tools/bin:$PATH
 
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/snichols/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/snichols/Downloads/google-cloud-sdk/path.bash.inc'; fi
@@ -24,8 +24,7 @@ if [ -f '/Users/snichols/Downloads/google-cloud-sdk/completion.bash.inc' ]; then
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-source /usr/local/etc/profile.d/bash_completion.sh
-. <(bujo completion)
+#source /usr/local/etc/profile.d/bash_completion.sh
+#. <(bujo completion)
 
-
-ulimit -S -n 4096
+#ulimit -S -n 4096
